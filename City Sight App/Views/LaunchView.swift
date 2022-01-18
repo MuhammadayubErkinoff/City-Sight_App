@@ -16,6 +16,6 @@ struct LaunchView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        LaunchView()
+        LaunchView().environmentObject(ContentModel())
     }
 }
