@@ -10,6 +10,7 @@ import SwiftUI
 struct BusinessDetailView: View {
     
     var business:Business
+    @State private var showDirections = false
     
     var body: some View {
         VStack(alignment:.leading){
@@ -42,29 +43,7 @@ struct BusinessDetailView: View {
                 
             }
             
-            // Name of business
-            Text(business.name ?? "")
-                .font(.title2)
-                .padding(.horizontal)
-            
-            HStack{
-                
-                // Address of business
-                VStack(alignment: .leading,spacing: 0){
-                    ForEach(business.location?.displayAddress ?? [String](), id: \.self) { address in
-                        Text(address)
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                            .padding(.horizontal)
-                    }
-                }
-                
-                // TODO: Yelp Image
-                
-            }.padding(5)
-            
-            // Rating
-            Image("regular_\(business.rating ?? 0)").padding(.horizontal)
+            BusinessTitle(business: business).padding()
             
             Divider()
             
@@ -126,7 +105,8 @@ struct BusinessDetailView: View {
             
             //  Get Directions Button
             Button(action: {
-                
+                // Show Directions
+                showDirections = true
             }){
                 ZStack{
                     
@@ -140,7 +120,11 @@ struct BusinessDetailView: View {
                         .bold()
                     
                 }
-            }.padding()
+            }
+            .padding()
+            .sheet(isPresented: $showDirections) {
+                    DirectionView(business: business)
+                }
             
         }
         .ignoresSafeArea()
