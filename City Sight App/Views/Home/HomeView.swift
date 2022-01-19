@@ -15,41 +15,46 @@ struct HomeView: View {
     
     var body: some View {
         
-        if model.restaurants.count != 0 || model.sights.count != 0{
-            
-            // Determine if we should show list or map
-            if isListShowing{
-                // Show list
-                VStack{
-                    HStack{
-                        Image(systemName: "location").padding()
-                        Text("San Fransisco")
-                        Spacer()
-                        Button(action: {
-                            isListShowing = false
-                        }){
-                            Text("Switch to Map View")
+        NavigationView{
+        
+            if model.restaurants.count != 0 || model.sights.count != 0{
+                
+                // Determine if we should show list or map
+                if isListShowing{
+                    // Show list
+                    VStack{
+                        HStack{
+                            Image(systemName: "location").padding()
+                            Text("San Fransisco")
+                            Spacer()
+                            Button(action: {
+                                isListShowing = false
+                            }){
+                                Text("Switch to Map View")
+                            }
                         }
-                    }
+                        
+                        Divider()
+                        
+                        BusinessList()
+                        
+                    }.padding([.horizontal,.top])
+                        .navigationBarHidden(true)
                     
-                    Divider()
+                }
+                else{
+                    //show map
                     
-                    BusinessList()
-                    
-                }.padding([.horizontal,.top])
+                }
                 
             }
             else{
-                //show map
+        
+                // Still waiting for data so show spinner
+                ProgressView()
                 
             }
-            
-        }
-        else{
-    
-            // Still waiting for data so show spinner
-            ProgressView()
-            
+                
         }
         
     }

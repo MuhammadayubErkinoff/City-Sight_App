@@ -24,7 +24,7 @@ struct BusinessRowView: View {
                 
                 // Name and distance
                 VStack(alignment:.leading){
-                    Text(business.name ?? "")
+                    Text(business.name ?? "").font(.headline)
                     Text(String(format:"%.1f km away",(business.distance ?? 0)/1000))
                         .font(.caption)
                 }
@@ -40,7 +40,7 @@ struct BusinessRowView: View {
                 
             }
             Divider()
-        }
+        }.foregroundColor(.black)
     }
 }
 
