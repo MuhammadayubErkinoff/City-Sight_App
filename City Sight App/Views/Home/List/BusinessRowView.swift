@@ -39,7 +39,7 @@ struct BusinessRowView: View {
                 }
                 
             }
-            Divider()
+            DashedDivider().padding(.vertical,10)
         }.foregroundColor(.black)
     }
 }

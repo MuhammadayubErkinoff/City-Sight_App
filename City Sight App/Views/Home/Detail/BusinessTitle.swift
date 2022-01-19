@@ -16,6 +16,7 @@ struct BusinessTitle: View {
             // Name of business
             Text(business.name ?? "")
                 .font(.title2)
+                .bold()
             
             HStack{
                 
