@@ -12,6 +12,7 @@ struct HomeView: View {
     @EnvironmentObject var model:ContentModel
     
     @State var isListShowing = true
+    @State var selectedBusiness: Business?
     
     var body: some View {
         
@@ -28,7 +29,7 @@ struct HomeView: View {
                             Text("San Fransisco")
                             Spacer()
                             Button(action: {
-                                isListShowing = false
+                                self.isListShowing = false
                             }){
                                 Text("Switch to Map View")
                             }
@@ -43,8 +44,40 @@ struct HomeView: View {
                     
                 }
                 else{
-                    //show map
                     
+                    ZStack(alignment: .top){
+                    
+                        // Show map
+                        BusinessMap(selectedBusiness: $selectedBusiness)
+                            .ignoresSafeArea()
+                            .sheet(item: $selectedBusiness) { business in
+                                
+                                //Create  a business detail view instance
+                                //Pass in the selected business
+                                BusinessDetailView(business: business)
+                                
+                            }
+                        
+                        //Rectangle Overlay
+                        ZStack{
+                            Rectangle()
+                                .foregroundColor(.white)
+                                .cornerRadius(5)
+                                .frame( height: 48)
+                            
+                            
+                            HStack{
+                                Image(systemName: "location").padding()
+                                Text("San Fransisco")
+                                Spacer()
+                                Button(action: {
+                                    self.isListShowing = true
+                                }){
+                                    Text("Switch to List View")
+                                }
+                            }.padding()
+                        }.padding()
+                    }.navigationBarHidden(true)
                 }
                 
             }
